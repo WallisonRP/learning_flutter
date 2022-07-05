@@ -4,11 +4,10 @@ void main() {
 
   runApp(MaterialApp(
     title: "Frases do dia",
-    home: Column(children: [
-      Text("Usuário:"),
-      Text("Senha:"),
-      Image.network('https://flutter.github.io/assets-for-api-docs/assets/widgets/owl-2.jpg'),
-      
+    home: Row(children: [
+      Text("teste1"),
+      Text("teste2"),
+      Text("teste3"),
     ],),
     //home: Container(color: Colors.white,),
   ));
