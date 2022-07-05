@@ -1,5 +1,3 @@
-import 'dart:math';
-
 import 'package:flutter/material.dart';
 
 void main() {
@@ -16,7 +14,7 @@ class MyApp extends StatelessWidget {
       title: 'Flutter Demo',
       theme: ThemeData(
         // This is the theme of your application.
-        //add more comments
+        //
         // Try running your application with "flutter run". You'll see the
         // application has a blue toolbar. Then, without quitting the app, try
         // changing the primarySwatch below to Colors.green and then invoke
@@ -24,9 +22,9 @@ class MyApp extends StatelessWidget {
         // or simply save your changes to "hot reload" in a Flutter IDE).
         // Notice that the counter didn't reset back to zero; the application
         // is not restarted.
-        primarySwatch: Colors.pink,
+        primarySwatch: Colors.blue,
       ),
-      home: const MyHomePage(title: 'Frases do dia'),
+      home: const MyHomePage(title: 'Flutter Demo Home Page'),
     );
   }
 }
@@ -50,17 +48,16 @@ class MyHomePage extends StatefulWidget {
 }
 
 class _MyHomePageState extends State<MyHomePage> {
-  int _randomNumber = 0;
-  List _frases = [
-    "No mundo atual, a revolução dos costumes .",
-    "Assim mesmo, a execução dos pontos do programa afeta positivamente a correta previsão das diretrizes de desenvolvimento para o futuro.",
-    "Não obstante, o desenvolvimento contínuo de distintas formas de atuação talvez venha a ressaltar a relatividade dos métodos utilizados na avaliação de resultados.",
-    "Assim mesmo, a execução dos pontos do programa assume importantes posições no estabelecimento de todos os recursos funcionais envolvidos."
-  ];
+  int _counter = 0;
 
   void _incrementCounter() {
     setState(() {
-      _randomNumber = new Random().nextInt(4);
+      // This call to setState tells the Flutter framework that something has
+      // changed in this State, which causes it to rerun the build method below
+      // so that the display can reflect the updated values. If we changed
+      // _counter without calling setState(), then the build method would not be
+      // called again, and so nothing would appear to happen.
+      _counter++;
     });
   }
 
@@ -99,10 +96,10 @@ class _MyHomePageState extends State<MyHomePage> {
           mainAxisAlignment: MainAxisAlignment.center,
           children: <Widget>[
             const Text(
-              'Pressione o botão para gerar uma frase: ',
+              'You have pushed the button this many times:',
             ),
             Text(
-              _frases[_randomNumber],
+              '$_counter',
               style: Theme.of(context).textTheme.headline4,
             ),
           ],
