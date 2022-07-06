@@ -2,44 +2,35 @@ import 'package:flutter/material.dart';
 
 void main() {
   runApp(MaterialApp(
+    //debugShowCheckedModeBanner: false,
     title: "Frases do dia",
     home: Container(
-      color: Colors.white,
+      // color: Colors.white,
+      decoration: BoxDecoration(
+        border: Border.all(
+          width: 3,
+          color: Colors.white
+        ),
+      ),
+      padding: EdgeInsets.fromLTRB(0, 0, 0, 0),
+      margin: EdgeInsets.all(0),
       child: Column(
+        // ignore: prefer_const_literals_to_create_immutables
         children: <Widget>[
-          TextButton(
-            style: ButtonStyle(
-              backgroundColor: MaterialStateProperty.all<Color>(Colors.blue),
-              minimumSize: MaterialStateProperty.all(Size(200, 50)),
-              
-              ),
-              onPressed: () {
-                print("Você clicou no botão");
-              },
-              child: Text(
-                "Clique aqui",
-                style: TextStyle(
-                  fontSize: 20,
-                  color: Colors.black,
-                  decoration: TextDecoration.none,
-                ),
-           )
-          )
-          // FlatButton(
-          //     onPressed: () {
-          //       print("Você clicou no botão");
-          //     },
-          //     height: 100,
-          //     minWidth: 300,
-          //     color: Colors.blue,
-          //     child: Text(
-          //       "Clique aqui",
-          //       style: TextStyle(
-          //         fontSize: 20,
-          //         color: Colors.black,
-          //         decoration: TextDecoration.none,
-          //       ),
-          //     ))
+          // ignore: prefer_const_constructors
+          /*Text(
+            "A certificação de metodologias que nos auxiliam a lidar com o entendimento das metas propostas representa uma abertura para a melho",
+            textAlign: TextAlign.justify,
+            )*/
+
+          Text("t1"),
+
+          Padding(
+            padding: EdgeInsets.all(30),
+            child: Text("t2"), 
+          ),
+
+          Text("t3"),
         ],
       ),
     ),
