@@ -9,17 +9,16 @@ void main() {
         border: Border.all(width: 3, color: Colors.white),
       ),
       margin: EdgeInsets.only(top: 40),
-      child: Row(
-        // ignore: prefer_const_literals_to_create_immutables
-        children: <Widget>[
-          // ignore: prefer_const_constructors
-          Text('T1'),
-          Text('T2'),
-          Text('T3'),
-        ],
-        mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-        crossAxisAlignment: CrossAxisAlignment.center,
+      child: Column(children: [
+        Image.asset(
+        "images/mesa.jpg",
+        fit: BoxFit.contain,
       ),
+      Image.asset(
+        "images/parque.jpg",
+        fit: BoxFit.contain,
+      )
+      ]),
     ),
   ));
 }
