@@ -26,9 +26,14 @@ class _JogoState extends State<Jogo> {
                 fontSize: 20,
                 fontWeight: FontWeight.bold,
               ),
-              ),
+            ),
           ),
-          Image.asset("images/padrao.png"),
+          GestureDetector(
+            onTap: () {
+              print("Você clicou na imagem");
+            },
+            child: Image.asset("images/padrao.png"),
+          ),
           Padding(
             padding: EdgeInsets.only(top: 32, bottom: 16),
             child: Text(
@@ -38,16 +43,16 @@ class _JogoState extends State<Jogo> {
                 fontSize: 20,
                 fontWeight: FontWeight.bold,
               ),
-              ),
             ),
-            Row(
-              mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-              children: [
-                Image.asset("images/pedra.png", height: 100),
-                Image.asset("images/papel.png", height: 100),
-                Image.asset("images/tesoura.png", height: 100),
-              ],
-            )
+          ),
+          Row(
+            mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+            children: [
+              Image.asset("images/pedra.png", height: 100),
+              Image.asset("images/papel.png", height: 100),
+              Image.asset("images/tesoura.png", height: 100),
+            ],
+          )
         ],
       ),
     );
