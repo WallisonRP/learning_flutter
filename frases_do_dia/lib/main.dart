@@ -16,19 +16,27 @@ class Home extends StatefulWidget {
 }
 
 class _HomeState extends State<Home> {
-  int _randomNumber = 0;
-  List _Frases = [
+  var _frases = [
     "A certificação de metodologias que nos auxiliam a lidar com o entendimento das metas propostas representa uma abertura para a melhoria dos paradigmas corporativos.",
-   "Todas estas questões, devidamente ponderadas, levantam dúvidas sobre se o desenvolvimento contínuo de distintas formas de atuação obstaculiza a apreciação da importância das condições inegavelmente apropriadas.", 
-   "A prática cotidiana prova que o julgamento imparcial das eventualidades garante a contribuição de um grupo importante na determinação do sistema de participação geral.", 
-   "Nunca é demais lembrar o peso e o significado destes problemas, uma vez que o fenômeno da Internet garante a contribuição de um grupo importante na determinação do remanejamento dos quadros funcionais.", 
-   "Todas estas questões, devidamente ponderadas, levantam dúvidas sobre se a constante divulgação das informações desafia a capacidade de equalização dos paradigmas corporativos.", 
-   "Todavia, o acompanhamento das preferências de consumo cumpre um papel essencial na formulação das direções preferenciais no sentido do progresso.", 
-   "Todas estas questões, devidamente ponderadas, levantam dúvidas sobre se o desenvolvimento contínuo de distintas formas de atuação talvez venha a ressaltar a relatividade do investimento em reciclagem técnica.", 
-   "Evidentemente, a complexidade dos estudos efetuados causa impacto indireto na reavaliação dos paradigmas corporativos.", 
-   "O que temos que ter sempre em mente é que o acompanhamento das preferências de consumo faz parte de um processo de gerenciamento do investimento em reciclagem técnica.", 
-   "Caros amigos, a contínua expansão de nossa atividade facilita a criação dos índices pretendidos."
-   ];
+    "Todas estas questões, devidamente ponderadas, levantam dúvidas sobre se o desenvolvimento contínuo de distintas formas de atuação obstaculiza a apreciação da importância das condições inegavelmente apropriadas.",
+    "A prática cotidiana prova que o julgamento imparcial das eventualidades garante a contribuição de um grupo importante na determinação do sistema de participação geral.",
+    "Nunca é demais lembrar o peso e o significado destes problemas, uma vez que o fenômeno da Internet garante a contribuição de um grupo importante na determinação do remanejamento dos quadros funcionais.",
+    "Todas estas questões, devidamente ponderadas, levantam dúvidas sobre se a constante divulgação das informações desafia a capacidade de equalização dos paradigmas corporativos.",
+    "Todavia, o acompanhamento das preferências de consumo cumpre um papel essencial na formulação das direções preferenciais no sentido do progresso.",
+    "Todas estas questões, devidamente ponderadas, levantam dúvidas sobre se o desenvolvimento contínuo de distintas formas de atuação talvez venha a ressaltar a relatividade do investimento em reciclagem técnica.",
+    "Evidentemente, a complexidade dos estudos efetuados causa impacto indireto na reavaliação dos paradigmas corporativos.",
+    "O que temos que ter sempre em mente é que o acompanhamento das preferências de consumo faz parte de um processo de gerenciamento do investimento em reciclagem técnica.",
+    "Caros amigos, a contínua expansão de nossa atividade facilita a criação dos índices pretendidos."
+  ];
+
+  var _fraseGerada = "Clique abaixo para gerar uma frase";
+
+  void _gerarFrase() {
+    int _randomNumber = Random().nextInt(_frases.length);
+    setState(() {
+    _fraseGerada = _frases[_randomNumber];
+    });
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -50,7 +58,7 @@ class _HomeState extends State<Home> {
               children: [
                 Image.asset("images/logo.png"),
                 Text(
-                  _Frases[_randomNumber],
+                  _fraseGerada,
                   textAlign: TextAlign.justify,
                   style: TextStyle(
                     fontSize: 25,
@@ -59,12 +67,7 @@ class _HomeState extends State<Home> {
                   ),
                 ),
                 ElevatedButton(
-                  onPressed: () {
-                    _randomNumber = new Random().nextInt(10);
-                    setState(() {
-                      print(_Frases[_randomNumber]);
-                    });
-                  },
+                  onPressed: _gerarFrase,
                   child: Text(
                     "Nova Frase",
                     style: TextStyle(
