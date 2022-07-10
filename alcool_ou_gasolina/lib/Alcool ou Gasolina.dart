@@ -1,3 +1,5 @@
+// ignore_for_file: prefer_const_constructors
+
 import 'package:flutter/material.dart';
 
 class AlcoolOuGasolina extends StatefulWidget {
@@ -8,6 +10,10 @@ class AlcoolOuGasolina extends StatefulWidget {
 }
 
 class _AlcoolOuGasolinaState extends State<AlcoolOuGasolina> {
+
+  TextEditingController _controllerAlcool = TextEditingController();
+  TextEditingController _controllerGasolina = TextEditingController();
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -15,11 +21,17 @@ class _AlcoolOuGasolinaState extends State<AlcoolOuGasolina> {
         title: Text("Álcool ou Gasolina")
       ),
       body: Container(
-        padding: EdgeInsets.all(32),
-        child: Column(children: [
-          Image.asset("images/logo.png"),
+        child: SingleChildScrollView(
+          padding: EdgeInsets.all(32),
+          child: Column(
+          crossAxisAlignment: CrossAxisAlignment.stretch,
+          children: [
           Padding(
-            padding: EdgeInsets.only(top: 32, bottom: 16),
+            padding: EdgeInsets.only(bottom: 32),
+            child: Image.asset("images/logo.png"),
+          ),
+          Padding(
+            padding: EdgeInsets.only(bottom: 10),
             child: Text(
               "Saiba qual a melhor opção para abastecer seu carro",
               style: TextStyle(
@@ -31,23 +43,53 @@ class _AlcoolOuGasolinaState extends State<AlcoolOuGasolina> {
           TextField(
             keyboardType: TextInputType.number,
             decoration: InputDecoration(
-              labelText: "Preço Alcool, ex: 3,60",
+              labelText: "Preço Alcool, ex: 3,89",
             ),
+            style: TextStyle(
+              fontSize: 22
+            ),
+            controller: _controllerAlcool,
           ),
           TextField(
             keyboardType: TextInputType.number,
             decoration: InputDecoration(
-              labelText: "Preço Gasolina, ex: 3,60",
+              labelText: "Preço Gasolina, ex: 5,89",
             ),
+            style: TextStyle(
+              fontSize: 22
+            ),
+            controller: _controllerGasolina,
           ),
-          ElevatedButton(
+          Padding(
+            padding: EdgeInsets.only(top: 10),
+            child: ElevatedButton(
             onPressed: (){}, 
             style: ElevatedButton.styleFrom(
-              
+              primary: Colors.blue,
+              onPrimary: Colors.white,
+              padding: EdgeInsets.all(15)
             ),
-            child: Text("Calcular")
-            )
-      ]),
+            child: Text(
+              "Calcular",
+              style: TextStyle(
+                fontSize: 20
+              ),
+              )
+            ),
+          ),
+          Padding(
+            padding: EdgeInsets.only(top: 20),
+            child: Text(
+              "Resultado",
+              style: TextStyle(
+                fontSize: 22,
+                fontWeight: FontWeight.bold
+              ),
+              ),
+          )
+      ]
+      ),
+        ),
       ),
     );
   }
