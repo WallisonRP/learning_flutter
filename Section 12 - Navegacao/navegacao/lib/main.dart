@@ -18,7 +18,31 @@ class _TelaPrincipalState extends State<TelaPrincipal> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      
+      appBar: AppBar(
+        title: Text("Tela Principal"),
+        backgroundColor: Colors.orange,
+      ),
+      body: Container(
+        child: Column(
+          children: [
+            ElevatedButton(
+              onPressed: () {
+                Navigator.push(
+                  context, 
+                  MaterialPageRoute(
+                    builder: ((context) => TelaSecundaria())
+                )
+                );
+              }, 
+              child: Text("Ir para segunda tela"),
+              style: ElevatedButton.styleFrom(
+                padding: EdgeInsets.all(15)
+              ),
+              
+              )
+          ],
+        ),
+      ),
     );
   }
 }
