@@ -17,10 +17,45 @@ class _EntradaRadioButtonState extends State<EntradaRadioButton> {
         title: Text("Entrada de Dados"),
       ),
       body: Container(
-        child: Row(
+        child: Column(
           children: [
+            RadioListTile(
+                title: Text("Masculino"),
+                value: "m",
+                groupValue: _escolhaUsuario,
+                onChanged: (String? escolha) {
+                  setState(() {
+                    _escolhaUsuario = escolha;
+                  });
+                }),
+            RadioListTile(
+                title: Text("Feminino"),
+                value: "f",
+                groupValue: _escolhaUsuario,
+                onChanged: (String? escolha) {
+                  setState(() {
+                    _escolhaUsuario = escolha;
+                  });
+                }),
+            RadioListTile(
+                title: Text("Outros"),
+                value: "o",
+                groupValue: _escolhaUsuario,
+                onChanged: (String? escolha) {
+                  setState(() {
+                    _escolhaUsuario = escolha;
+                  });
+                }),
+            ElevatedButton(
+                onPressed: () {
+                  print("Escolha: $_escolhaUsuario");
+                },
+                child: Text(
+                  "Salvar",
+                  style: TextStyle(fontSize: 20),
+                ))
 
-
+            /*
             Text("Masculino"),
             Radio(
                 value: "m",
@@ -41,8 +76,7 @@ class _EntradaRadioButtonState extends State<EntradaRadioButton> {
                   });
                   print("Escolha: $escolha");
                 })
-
-                
+                */
           ],
         ),
       ),
