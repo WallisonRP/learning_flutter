@@ -2,10 +2,12 @@
 
 import 'package:flutter/material.dart';
 import 'Campo Texto.dart';
+import 'EntradaCheckBox.dart';
 
 void main() {
   runApp(MaterialApp(
     debugShowCheckedModeBanner: false,
-    home: CampoTexto(),
+    // home: CampoTexto(),
+    home: EntradaCheckBox(),
   ));
 }
