@@ -64,6 +64,10 @@ flutter:
   assets:
     - images/logo.png
     - images/botao_jogar.png
+    - images/botao_voltar.png
+    - images/moeda_cara.png
+    - images/moeda_coroa.png
+
 
   # An image asset can refer to one or more resolution-specific "variants", see
   # https://flutter.dev/assets-and-images/#resolution-aware
