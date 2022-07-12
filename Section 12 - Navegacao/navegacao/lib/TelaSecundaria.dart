@@ -18,7 +18,16 @@ class _TelaSecundariaState extends State<TelaSecundaria> {
       ),
       body: Container(
         child: Column(
-          children: [Text("Segunda tela! Valor passado: ${widget.valor} ")],
+          children: [
+            Text("Segunda tela!"),
+            ElevatedButton(
+              onPressed: () {
+                Navigator.pop(context, "/");
+              },
+              child: Text("Ir para a primeira tela"),
+              style: ElevatedButton.styleFrom(padding: EdgeInsets.all(15)),
+            )
+            ],
         ),
       ),
     );
