@@ -1,4 +1,4 @@
-// ignore_for_file: prefer_const_constructors
+// ignore_for_file: prefer_const_constructors, no_leading_underscores_for_local_identifiers
 
 import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
@@ -12,8 +12,12 @@ class Home extends StatefulWidget {
 }
 
 class _HomeState extends State<Home> {
+  String _resultado = "Resultado";
+    TextEditingController _cepController = TextEditingController();
+
   _recuperarCep() async {
-    String url = "https://viacep.com.br/ws/14098374/json/";
+    String cep = _cepController.text;
+    String url = "https://viacep.com.br/ws/$cep/json/";
     http.Response response;
     response = await http.get(url);
     Map<String, dynamic> retorno = jsonDecode(response.body);
@@ -22,9 +26,13 @@ class _HomeState extends State<Home> {
     String bairro = retorno['bairro'];
     String localidade = retorno['localidade'];
 
+    setState(() {
+      _resultado =
+          "Logradouro: $logradouro\nComplemento: $complemento\nBairro: $bairro\nLocalidade: $localidade";
+    });
+
     print(
-      " Resposta logradouro: $logradouro\n Resposta complemento: $complemento\n Resposta bairro: $bairro\n Resposta localidade: $localidade"
-    );
+        " Resposta logradouro: $logradouro\n Resposta complemento: $complemento\n Resposta bairro: $bairro\n Resposta localidade: $localidade");
 
     // print("resposta: ${response.body}");
     // print("resposta: ${response.statusCode.toString()}");
@@ -40,7 +48,18 @@ class _HomeState extends State<Home> {
         padding: EdgeInsets.all(40),
         child: Column(
           children: [
-            ElevatedButton(onPressed: _recuperarCep, child: Text("Clique aqui"))
+            TextField(
+              keyboardType: TextInputType.number,
+              decoration: InputDecoration(
+              labelText: "Digite seu cep",
+              ),
+              style: TextStyle(
+                fontSize: 20,
+              ),
+              controller: _cepController,
+            ),
+            ElevatedButton(onPressed: _recuperarCep, child: Text("Clique aqui", style: TextStyle(fontSize: 20),)),
+            Text(_resultado)
           ],
         ),
       ),
