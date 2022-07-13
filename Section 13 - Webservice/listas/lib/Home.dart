@@ -1,3 +1,5 @@
+// ignore_for_file: prefer_const_constructors
+
 import 'package:flutter/material.dart';
 
 class Home extends StatefulWidget {
@@ -35,8 +37,39 @@ class _HomeState extends State<Home> {
               // Map<String, dynamic> item = _itens[index];
               // print("Item: ${item["titulo"].toString()}");
               return ListTile(
-                title: Text(_itens[index]["titulo"].toString()),
-                subtitle: Text(_itens[index]["descricao"].toString()),
+                onTap: () {
+                  // print("Clicou no item $index");
+                  showDialog(
+                      context: context,
+                      builder: (context) {
+                        return AlertDialog(
+                          title: Text(_itens[index]["titulo"]),
+                          titlePadding: EdgeInsets.all(20),
+                          titleTextStyle:
+                              TextStyle(fontSize: 20, color: Colors.orange),
+                          content: Text(_itens[index]["descricao"]),
+                          actions: [
+                            ElevatedButton(
+                                onPressed: () {
+                                  print("Selecionado sim.\nItem: $index");
+                                  Navigator.pop(context);
+                                },
+                                child: Text("Sim")),
+                            ElevatedButton(
+                                onPressed: () {
+                                  print("Selecionado não.\nItem: $index");
+                                  Navigator.pop(context);
+                                },
+                                child: Text("Não")),
+                          ],
+                        );
+                      });
+                },
+                // onLongPress: () {
+                //   print("Clicou 2");
+                // },
+                title: Text(_itens[index]["titulo"]),
+                subtitle: Text(_itens[index]["descricao"]),
               );
             }),
       ),
