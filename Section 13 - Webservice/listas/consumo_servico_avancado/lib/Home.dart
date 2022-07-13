@@ -27,47 +27,110 @@ class _HomeState extends State<Home> {
     return postagens;
   }
 
+  _post() async {
+    var corpo = json.encode(
+      {
+        "userId": 120,
+        "id": null,
+        "title": "Titulo",
+        "body": "Corpo da postagem"
+      }
+    );
+    http.Response response = await http.post(
+      Uri.parse("${_urlBase}/posts"),
+      headers: {
+    'Content-type': 'application/json; charset=UTF-8',
+  },
+      body: corpo,
+      );
+
+
+    print("resposta: ${response.statusCode}");
+    print("resposta: ${response.body}");
+
+  }
+
+  _put() {
+    
+  }
+
+  _patch() {
+    
+  }
+
+  _delete() {
+    
+  }
+
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
         title: Text("Consumo de serviço avançado"),
       ),
-      body: FutureBuilder<List<Post>>(
-          future: _recuperarPostagens(),
-          builder: (context, snapshop) {
-            switch (snapshop.connectionState) {
-              case ConnectionState.none:
-              case ConnectionState.waiting:
-                return Center(
-                  child: CircularProgressIndicator(),
-                );
-                break;
-              case ConnectionState.active:
-              case ConnectionState.done:
-                print("Conexão done");
-                if (snapshop.hasError) {
-                  print("Lista: Erro ao carregar");
-                } else {
-                  print("Lista: Carregada com sucesso!");
-                  return ListView.builder(
-                    itemCount: snapshop.data?.length,
-                    itemBuilder: (context, index) {
-                      List<Post>? lista = snapshop.data;
-                      Post post = lista![index];
+      body: Container(
+        padding: EdgeInsets.all(16),
+        child: Column(
+          children: [
+            Row(
+              children: [
+                ElevatedButton(
+                  onPressed: _post, 
+                  child: Text("Salvar")
+                  ),
+                ElevatedButton(
+                  onPressed: _post, 
+                  child: Text("Atualizar")
+                  ),
+                ElevatedButton(
+                  onPressed: _post, 
+                  child: Text("Deletar")
+                  )              
+              ],
+            ),
+
+            Expanded(
+              child: FutureBuilder<List<Post>>(
+              future: _recuperarPostagens(),
+              builder: (context, snapshop) {
+                switch (snapshop.connectionState) {
+                  case ConnectionState.none:
+                  case ConnectionState.waiting:
+                    return Center(
+                      child: CircularProgressIndicator(),
+                    );
+                    break;
+                  case ConnectionState.active:
+                  case ConnectionState.done:
+                    print("Conexão done");
+                    if (snapshop.hasError) {
+                      print("Lista: Erro ao carregar");
+                    } else {
+                      return ListView.builder(
+                        itemCount: snapshop.data?.length,
+                        itemBuilder: (context, index) {
+                          List<Post>? lista = snapshop.data;
+                          Post post = lista![index];
 
 
-                      return ListTile(
-                        title: Text(post.title),
-                        subtitle: Text(post.id.toString()),
+                          return ListTile(
+                            title: Text(post.title),
+                            subtitle: Text(post.id.toString()),
+                          );
+                        },
                       );
-                    },
-                  );
+                    }
+                    break;
                 }
-                break;
-            }
-            return Center();
+                return Center();
           }),
+              )
+
+
+          ],
+        ),
+      ),
     );
   }
 }
