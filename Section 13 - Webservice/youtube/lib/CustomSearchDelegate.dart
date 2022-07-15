@@ -1,3 +1,5 @@
+// ignore_for_file: prefer_const_constructors
+
 import 'package:flutter/material.dart';
 
 class CustomSearchDelegate extends SearchDelegate<String> {
@@ -31,6 +33,28 @@ class CustomSearchDelegate extends SearchDelegate<String> {
   @override
   Widget buildSuggestions(BuildContext context) {
     print("O valor digitado foi: $query");
-    return Container();
+    List<String> lista = [];
+
+    if (query.isNotEmpty) {
+      lista = ["Android", "HTML", "Ios"]
+          .where((element) =>
+              element.toLowerCase().startsWith(query.toLowerCase()))
+          .toList();
+
+      return ListView.builder(
+          itemCount: lista.length,
+          itemBuilder: (context, index) {
+            return ListTile(
+              onTap: () {
+                close(context, lista[index]);
+              },
+              title: Text(lista[index]),
+            );
+          });
+    } else {
+      return Center(
+        child: Text("Nenhum resultado para a pesquisa"),
+      );
+    }
   }
 }
