@@ -1,4 +1,4 @@
-// ignore_for_file: prefer_const_constructors, prefer_const_literals_to_create_immutables, unused_local_variable
+// ignore_for_file: prefer_const_constructors, prefer_const_literals_to_create_immutables, unused_local_variable, no_leading_underscores_for_local_identifiers
 
 import 'package:flutter/material.dart';
 import 'package:youtube/CustomSearchDelegate.dart';
@@ -16,11 +16,13 @@ class Home extends StatefulWidget {
 
 class _HomeState extends State<Home> {
   int _indiceAtual = 0;
+  String? _pesquisa = "";
 
   @override
   Widget build(BuildContext context) {
+
     List<Widget> _telas = [
-      Inicio(),
+      Inicio(_pesquisa),
       EmAlta(),
       Inscricoes(),
       Biblioteca(),
@@ -40,6 +42,9 @@ class _HomeState extends State<Home> {
               onPressed: () async {
                 String? result = await showSearch(
                     context: context, delegate: CustomSearchDelegate());
+                setState(() {
+                  _pesquisa = result;
+                });
                 print("Resultado digitado é: $result");
               },
               icon: Icon(Icons.search)),

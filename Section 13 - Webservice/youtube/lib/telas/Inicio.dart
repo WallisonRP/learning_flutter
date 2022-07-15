@@ -5,22 +5,24 @@ import '../Api.dart';
 import '../models/video.dart';
 
 class Inicio extends StatefulWidget {
-  const Inicio({Key? key}) : super(key: key);
+  String? pesquisa;
+
+  Inicio(this.pesquisa);
 
   @override
   State<Inicio> createState() => _InicioState();
 }
 
 class _InicioState extends State<Inicio> {
-  _listarVideos() {
+  _listarVideos(String pesquisa) {
     Api api = Api();
-    return api.pesquisar("");
+    return api.pesquisar(pesquisa);
   }
 
   @override
   Widget build(BuildContext context) {
     return FutureBuilder<List<Video>>(
-      future: _listarVideos(),
+      future: _listarVideos(widget.pesquisa!),
       builder: (context, snapshot) {
         switch (snapshot.connectionState) {
           case ConnectionState.none:
@@ -33,33 +35,30 @@ class _InicioState extends State<Inicio> {
           case ConnectionState.done:
             if (snapshot.hasData) {
               return ListView.separated(
-                itemBuilder: (context, index) {
-                  List<Video>? videos = snapshot.data;
-                  Video video = videos![index];
-                  return Column(
-                  children: [
-                    Container(
-                      height: 200,
-                      decoration: BoxDecoration(
-                        image: DecorationImage(
-                          fit: BoxFit.cover,
-                          image: NetworkImage(video.imagem.toString())
+                  itemBuilder: (context, index) {
+                    List<Video>? videos = snapshot.data;
+                    Video video = videos![index];
+                    return Column(
+                      children: [
+                        Container(
+                          height: 200,
+                          decoration: BoxDecoration(
+                            image: DecorationImage(
+                                fit: BoxFit.cover,
+                                image: NetworkImage(video.imagem.toString())),
+                          ),
                         ),
+                        ListTile(
+                            title: Text(video.titulo.toString()),
+                            subtitle: Text(video.canal.toString()))
+                      ],
+                    );
+                  },
+                  separatorBuilder: (context, index) => Divider(
+                        height: 2,
+                        color: Colors.grey,
                       ),
-                    ),
-                    ListTile(
-                      title: Text(video.titulo.toString()),
-                      subtitle: Text(video.canal.toString())
-                    )
-                  ],
-                );
-                } , 
-                separatorBuilder: (context, index) => Divider(
-                  height: 2,
-                  color: Colors.grey,
-                ), 
-                itemCount: snapshot.data!.length
-                );
+                  itemCount: snapshot.data!.length);
             } else {
               return Center(
                 child: Text("Nenhum dado a ser exibido"),
