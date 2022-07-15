@@ -1,11 +1,11 @@
-// ignore_for_file: prefer_const_constructors, prefer_const_literals_to_create_immutables
+// ignore_for_file: prefer_const_constructors, prefer_const_literals_to_create_immutables, unused_local_variable
 
 import 'package:flutter/material.dart';
+import 'package:youtube/CustomSearchDelegate.dart';
 import 'telas/Inicio.dart';
 import 'telas/EmAlta.dart';
 import 'telas/Inscricoes.dart';
 import 'telas/Biblioteca.dart';
-
 
 class Home extends StatefulWidget {
   const Home({Key? key}) : super(key: key);
@@ -37,20 +37,27 @@ class _HomeState extends State<Home> {
         ),
         actions: [
           IconButton(
+              onPressed: () async {
+                String? result = await showSearch(
+                    context: context, delegate: CustomSearchDelegate());
+                print("Resultado digitado é: $result");
+              },
+              icon: Icon(Icons.search)),
+
+          /*
+          IconButton(
               onPressed: () {
                 print("Ação: videocam");
               },
               icon: Icon(Icons.videocam)),
-          IconButton(
-              onPressed: () {
-                print("Ação: search");
-              },
-              icon: Icon(Icons.search)),
+
           IconButton(
               onPressed: () {
                 print("Ação: account");
               },
               icon: Icon(Icons.account_circle))
+
+              */
         ],
       ),
       body: Container(
