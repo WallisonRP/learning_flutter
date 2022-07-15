@@ -3,6 +3,7 @@
 import 'package:flutter/material.dart';
 import '../Api.dart';
 import '../models/video.dart';
+import 'package:flutter_youtube/flutter_youtube.dart';
 
 class Inicio extends StatefulWidget {
   String? pesquisa;
@@ -38,20 +39,26 @@ class _InicioState extends State<Inicio> {
                   itemBuilder: (context, index) {
                     List<Video>? videos = snapshot.data;
                     Video video = videos![index];
-                    return Column(
-                      children: [
-                        Container(
-                          height: 200,
-                          decoration: BoxDecoration(
-                            image: DecorationImage(
-                                fit: BoxFit.cover,
-                                image: NetworkImage(video.imagem.toString())),
+                    return GestureDetector(
+                      onTap: () {
+                        FlutterYoutube.playYoutubeVideoById(
+                            apiKey: chave_youtube_api, videoId: video.id, autoPlay: true);
+                      },
+                      child: Column(
+                        children: [
+                          Container(
+                            height: 200,
+                            decoration: BoxDecoration(
+                              image: DecorationImage(
+                                  fit: BoxFit.cover,
+                                  image: NetworkImage(video.imagem.toString())),
+                            ),
                           ),
-                        ),
-                        ListTile(
-                            title: Text(video.titulo.toString()),
-                            subtitle: Text(video.canal.toString()))
-                      ],
+                          ListTile(
+                              title: Text(video.titulo.toString()),
+                              subtitle: Text(video.canal.toString()))
+                        ],
+                      ),
                     );
                   },
                   separatorBuilder: (context, index) => Divider(

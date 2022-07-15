@@ -32,7 +32,9 @@ class CustomSearchDelegate extends SearchDelegate<String> {
 
   @override
   Widget buildSuggestions(BuildContext context) {
-    print("O valor digitado foi: $query");
+    return Container();
+    // print("O valor digitado foi: $query");
+/*
     List<String> lista = [];
 
     if (query.isNotEmpty) {
@@ -56,5 +58,6 @@ class CustomSearchDelegate extends SearchDelegate<String> {
         child: Text("Nenhum resultado para a pesquisa"),
       );
     }
+    */
   }
 }
