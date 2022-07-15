@@ -45,7 +45,6 @@ class _HomeState extends State<Home> {
                 setState(() {
                   _pesquisa = result;
                 });
-                print("Resultado digitado é: $result");
               },
               icon: Icon(Icons.search)),
 

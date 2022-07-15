@@ -21,7 +21,34 @@ class _InicioState extends State<Inicio> {
   }
 
   @override
+  void initState() {
+    super.initState();
+    print("Chamado 1 - initState");
+  }
+
+  @override
+  void didChangeDependencies() {
+    super.didChangeDependencies();
+        print("Chamado 2 - didChangeDependencies");
+  }
+
+  @override
+  void didUpdateWidget(covariant Inicio oldWidget) {
+    super.didUpdateWidget(oldWidget);
+        print("Chamado 2 - didUpdateWidget");
+  }
+
+  @override
+  void dispose() {
+    super.dispose();
+        print("Chamado 4 - dispose");
+  }
+
+  @override
   Widget build(BuildContext context) {
+
+    print("Chamado 3 - build");
+
     return FutureBuilder<List<Video>>(
       future: _listarVideos(widget.pesquisa!),
       builder: (context, snapshot) {
@@ -42,7 +69,9 @@ class _InicioState extends State<Inicio> {
                     return GestureDetector(
                       onTap: () {
                         FlutterYoutube.playYoutubeVideoById(
-                            apiKey: chave_youtube_api, videoId: video.id, autoPlay: true);
+                            apiKey: chave_youtube_api,
+                            videoId: video.id,
+                            autoPlay: true);
                       },
                       child: Column(
                         children: [

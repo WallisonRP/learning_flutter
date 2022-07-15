@@ -19,7 +19,6 @@ class Api {
         "&q=$pesquisa"));
 
     if (response.statusCode == 200) {
-      print("Até aqui tudo ok");
       Map<String, dynamic> dadosJson = json.decode(response.body);
 
       List<Video> videos = dadosJson["items"].map<Video>((map) {
