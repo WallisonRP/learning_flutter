@@ -53,7 +53,8 @@ class _HomeState extends State<Home> {
               icon: Icon(Icons.account_circle))
         ],
       ),
-      body: Center(
+      body: Container(
+        padding: EdgeInsets.all(16),
         child: _telas[_indiceAtual],
       ),
       bottomNavigationBar: BottomNavigationBar(
