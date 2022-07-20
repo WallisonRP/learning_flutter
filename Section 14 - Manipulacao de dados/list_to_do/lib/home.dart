@@ -1,6 +1,8 @@
 // ignore_for_file: prefer_const_constructors
-
 import 'package:flutter/material.dart';
+import 'package:path_provider/path_provider.dart';
+import 'dart:io';
+import 'dart:convert';
 
 class Home extends StatefulWidget {
   const Home({Key? key}) : super(key: key);
@@ -10,7 +12,21 @@ class Home extends StatefulWidget {
 }
 
 class _HomeState extends State<Home> {
-  List _listaTarefas = ["Ir ao mercado", "Estudar", "Exercício do dia"];
+  List _listaTarefas = [];
+
+  _salvarArquivo() async {
+    final diretorio = await getApplicationDocumentsDirectory();
+    // print("Diretório: ${diretorio.path}");
+    var arquivo = File("${diretorio.path}/dados.json");
+
+    Map<String, dynamic> tarefa = Map();
+    tarefa["titulo"] = "Ir ao mercado";
+    tarefa["realizada"] = false;
+    _listaTarefas.add(tarefa);
+
+    String dados = json.encode(_listaTarefas);
+    arquivo.writeAsString(dados);
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -34,15 +50,14 @@ class _HomeState extends State<Home> {
                   ),
                   actions: [
                     TextButton(
-                      onPressed: () => Navigator.pop(context), 
-                    child: Text("Cancelar")
-                    ),
+                        onPressed: () => Navigator.pop(context),
+                        child: Text("Cancelar")),
                     TextButton(
                         onPressed: () {
+                          _salvarArquivo();
                           Navigator.pop(context);
-                        }, 
-                    child: Text("Salvar")
-                    )
+                        },
+                        child: Text("Salvar"))
                   ],
                 );
               });
