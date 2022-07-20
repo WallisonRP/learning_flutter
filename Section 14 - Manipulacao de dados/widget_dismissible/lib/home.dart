@@ -1,3 +1,5 @@
+// ignore_for_file: prefer_const_literals_to_create_immutables
+
 import 'package:flutter/material.dart';
 
 class Home extends StatefulWidget {
@@ -25,9 +27,43 @@ class _HomeState extends State<Home> {
                     final item = _lista[index];
 
                     return Dismissible(
-                        // direction: DismissDirection.horizontal,
+                        background: Container(
+                          color: Colors.green,
+                          padding: EdgeInsets.all(16),
+                          child: Row(
+                            mainAxisAlignment: MainAxisAlignment.start,
+                            children: [
+                              const Icon(
+                                Icons.edit,
+                                color: Colors.white,
+                              ),
+                            ],
+                          ),
+                        ),
+                        secondaryBackground: Container(
+                          color: Colors.red,
+                          padding: EdgeInsets.all(16),
+                          child: Row(
+                            mainAxisAlignment: MainAxisAlignment.end,
+                            children: [
+                              const Icon(
+                                Icons.delete,
+                                color: Colors.white,
+                              )
+                            ],
+                          ),
+                        ),
+                        direction: DismissDirection.horizontal,
                         onDismissed: (direction) {
-                          print("Direção: ${direction.toString()}");
+                          if (direction == DismissDirection.endToStart) {
+                            print("Direção: ${direction.toString()}");
+                          } else if (direction == DismissDirection.startToEnd) {
+                            print("Direção: ${direction.toString()}");
+                          }
+
+                          setState(() {
+                            _lista.removeAt(index);
+                          });
                         },
                         key: Key(item),
                         child: ListTile(
