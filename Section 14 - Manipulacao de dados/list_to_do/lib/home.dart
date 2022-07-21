@@ -13,6 +13,7 @@ class Home extends StatefulWidget {
 
 class _HomeState extends State<Home> {
   List _listaTarefas = [];
+  Map<String, dynamic> _ultimoItemRemovido = Map();
   TextEditingController _controllerTarefa = TextEditingController();
 
   Future<File> _getFile() async {
@@ -51,26 +52,38 @@ class _HomeState extends State<Home> {
   }
 
   Widget _criarItemLista(context, index) {
-    final item = _listaTarefas[index]["titulo"];
+    // final item = _listaTarefas[index]["titulo"];
 
     return Dismissible(
-        key: Key(item),
+        key: Key( DateTime.now().microsecondsSinceEpoch.toString() ),
         direction: DismissDirection.endToStart,
         onDismissed: (direction) {
           //recuperar último item excluido
-
+          _ultimoItemRemovido = _listaTarefas[index];
           //Remove itens da lista
           _listaTarefas.removeAt(index);
-          // _salvarArquivo();
+          _salvarArquivo();
 
           //snackbar
           final snackbar = SnackBar(
             backgroundColor: Colors.green,
-            duration: Duration(seconds: 5),
-            padding: EdgeInsets.all(14),
-            content: Text("Tarefa removida com sucesso!", style: TextStyle(fontSize: 14, fontWeight: FontWeight.bold),)
-            );
-          
+            duration: Duration(seconds: 7),
+            // padding: EdgeInsets.all(14),
+            content: Text(
+              "Tarefa removida com sucesso!",
+              style: TextStyle(fontSize: 14, fontWeight: FontWeight.bold),
+            ),
+            action: SnackBarAction(
+                label: "Desfazer",
+                onPressed: () {
+                  //Inserir o item novamente na lista
+                  setState(() {
+                    _listaTarefas.insert(index, _ultimoItemRemovido);
+                  });
+                  _salvarArquivo();
+                }),
+          );
+
           Scaffold.of(context).showSnackBar(snackbar);
         },
         background: Container(
@@ -116,7 +129,7 @@ class _HomeState extends State<Home> {
 
   @override
   Widget build(BuildContext context) {
-    // print("Itens: ${_listaTarefas.toString()}");
+    // print("Itens: ${DateTime.now().microsecondsSinceEpoch}");
     return Scaffold(
       appBar: AppBar(
         title: Text("Lista de tarefas"),
