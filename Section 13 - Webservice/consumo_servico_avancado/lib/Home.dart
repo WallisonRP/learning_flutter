@@ -100,7 +100,7 @@ class _HomeState extends State<Home> {
             Row(
               children: [
                 ElevatedButton(onPressed: _post, child: Text("Salvar")),
-                ElevatedButton(onPressed: _patch, child: Text("Atualizar")),
+                ElevatedButton(onPressed: _put, child: Text("Atualizar")),
                 ElevatedButton(onPressed: _delete, child: Text("Deletar"))
               ],
             ),
@@ -117,7 +117,7 @@ class _HomeState extends State<Home> {
                         break;
                       case ConnectionState.active:
                       case ConnectionState.done:
-                        print("Conexão done");
+                        print("Connection done");
                         if (snapshop.hasError) {
                           print("Lista: Erro ao carregar");
                         } else {
