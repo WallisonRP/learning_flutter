@@ -50,6 +50,26 @@ class _HomeState extends State<Home> {
     }
   }
 
+  Widget _criarItemLista(context, index) {
+    return CheckboxListTile(
+                  title: Text(_listaTarefas[index]["titulo"]),
+                  value: _listaTarefas[index]["realizada"],
+                  onChanged: (valorAlterado) {
+                    setState(() {
+                    _listaTarefas[index]["realizada"] = valorAlterado;
+                    });
+                    _salvarArquivo();
+                  },
+                );
+
+
+                /*
+                return ListTile(
+                  title: Text(_listaTarefas[index]["titulo"]),
+                );
+                */
+  }
+
   @override
   void initState() {
     super.initState();
@@ -102,24 +122,7 @@ class _HomeState extends State<Home> {
           Expanded(
             child: ListView.builder(
               itemCount: _listaTarefas.length,
-              itemBuilder: (context, index) {
-                return CheckboxListTile(
-                  title: Text(_listaTarefas[index]["titulo"]),
-                  value: _listaTarefas[index]["realizada"],
-                  onChanged: (valorAlterado) {
-                    setState(() {
-                    _listaTarefas[index]["realizada"] = valorAlterado;
-                    });
-                    _salvarArquivo();
-                  },
-                );
-
-                /*
-                return ListTile(
-                  title: Text(_listaTarefas[index]["titulo"]),
-                );
-                */
-              },
+              itemBuilder: _criarItemLista,
             ),
           )
         ],
