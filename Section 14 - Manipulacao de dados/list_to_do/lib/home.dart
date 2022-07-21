@@ -57,8 +57,21 @@ class _HomeState extends State<Home> {
         key: Key(item),
         direction: DismissDirection.endToStart,
         onDismissed: (direction) {
-            _listaTarefas.removeAt(index);
-          _salvarArquivo();
+          //recuperar último item excluido
+
+          //Remove itens da lista
+          _listaTarefas.removeAt(index);
+          // _salvarArquivo();
+
+          //snackbar
+          final snackbar = SnackBar(
+            backgroundColor: Colors.green,
+            duration: Duration(seconds: 5),
+            padding: EdgeInsets.all(14),
+            content: Text("Tarefa removida com sucesso!", style: TextStyle(fontSize: 14, fontWeight: FontWeight.bold),)
+            );
+          
+          Scaffold.of(context).showSnackBar(snackbar);
         },
         background: Container(
           color: Colors.red,
