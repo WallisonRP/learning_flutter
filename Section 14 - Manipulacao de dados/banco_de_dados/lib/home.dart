@@ -1,3 +1,5 @@
+// ignore_for_file: prefer_adjacent_string_concatenation, prefer_interpolation_to_compose_strings
+
 import 'package:flutter/material.dart';
 import 'package:sqflite/sqflite.dart';
 import 'package:path/path.dart';
@@ -29,17 +31,30 @@ class _HomeState extends State<Home> {
 
   _salvarNoBancoDeDados() async {
     Database bd = await _recuperarBancoDeDados();
-    Map<String, dynamic> dadosUsuario = {
-      "nome": "Ester Figueiredo",
-      "idade": 24
-    };
+    Map<String, dynamic> dadosUsuario = {"nome": "Guilherme Lima", "idade": 41};
     int id = await bd.insert("usuarios", dadosUsuario);
     print("Salvo: $id");
   }
 
+  _listarUsuarios() async {
+    Database bd = await _recuperarBancoDeDados();
+
+    String sql = "SELECT * FROM usuarios";
+    List usuarios = await bd.rawQuery(sql);
+
+    for (var usuario in usuarios) {
+      print(
+        " id: ${usuario["id"]}" +
+        " nome: ${usuario["nome"]}" + 
+        " idade: ${usuario["idade"]}\n"
+        );
+    }
+    // print("Usuários: ${usuarios.toString()}");
+  }
+
   @override
   Widget build(BuildContext context) {
-    _salvarNoBancoDeDados();
+    _listarUsuarios();
     return Container();
   }
 }
