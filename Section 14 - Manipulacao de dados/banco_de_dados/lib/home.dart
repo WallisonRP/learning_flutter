@@ -39,7 +39,8 @@ class _HomeState extends State<Home> {
   _listarUsuarios() async {
     Database bd = await _recuperarBancoDeDados();
 
-    String sql = "SELECT * FROM usuarios";
+    // String sql = "SELECT * FROM usuarios WHERE idade >= 23 OR idade = 41";
+    String sql = "SELECT * FROM usuarios WHERE nome = 'Pedro Luis' AND idade = 41";
     List usuarios = await bd.rawQuery(sql);
 
     for (var usuario in usuarios) {
