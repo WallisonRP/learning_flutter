@@ -31,7 +31,7 @@ class _HomeState extends State<Home> {
 
   _salvarNoBancoDeDados() async {
     Database bd = await _recuperarBancoDeDados();
-    Map<String, dynamic> dadosUsuario = {"nome": "Guilherme Lima", "idade": 41};
+    Map<String, dynamic> dadosUsuario = {"nome": "Pedro Luis", "idade": 19};
     int id = await bd.insert("usuarios", dadosUsuario);
     print("Salvo: $id");
   }
@@ -86,20 +86,44 @@ class _HomeState extends State<Home> {
     Database bd = await _recuperarBancoDeDados();
 
     //Caso seja executado sem condições, todos os registros da tabela, serão apagados
+
     // Future retorno = bd.delete("usuarios", where: "id = ?", whereArgs: [id]);
+
+    // int retorno = await bd.delete("usuarios",
+    //     where: "id = ? AND nome = ? AND idade = ?",
+    //     whereArgs: [id, "Ester Figueiredo", 24]);
+
     int retorno = await bd.delete("usuarios",
-        where: "id = ? AND nome = ? AND idade = ?",
-        whereArgs: [id, "Ester Figueiredo", 24]);
+        where: "nome = ? AND idade = ?",
+        whereArgs: ["Guilherme Crisostomo", 19]);
+
     print("Quantidade de itens removidos: $retorno");
   }
 
+  _atualizarUsuario(int id) async {
+    Database bd = await _recuperarBancoDeDados();
+    //Caso seja executado sem condições, todos os registros da tabela, serão alterados
+    Map<String, dynamic> dadosUsuario = {
+      "nome": "Wallison Franklin",
+      "idade": 24
+    };
 
+    int retorno = await bd.update(
+      "usuarios",
+      where: "id = ?",
+      whereArgs: [id],
+      dadosUsuario,
+    );
+    print("Quantidade de itens alterados: $retorno");
+  }
 
   @override
   Widget build(BuildContext context) {
-    _listarUsuarios();
-    // _recuperarUsuarioPeloId(1);
+    // _salvarNoBancoDeDados();
+    // _recuperarUsuarioPeloId(7);
     // _deletarUsuario(3);
+    // _atualizarUsuario(4);
+    _listarUsuarios();
     return Container();
   }
 }
