@@ -50,10 +50,12 @@ class _HomeState extends State<Home> {
     // String sql = "SELECT * FROM usuarios WHERE nome LIKE '%$filtro%'";
     // String sql = "SELECT * FROM usuarios WHERE 1=1 ORDER BY nome ASC"; //ASC ou DESC;
     // String sql = "SELECT * FROM usuarios WHERE 1=1 ORDER BY idade ASC"; //ASC ou DESC;
-    String sql = "SELECT * FROM usuarios WHERE 1=1 ORDER BY idade ASC LIMIT 3"; //ASC ou DESC;
+    String sql = "SELECT * FROM usuarios"; //ASC ou DESC;
+    // String sql =
+    //     "SELECT * FROM usuarios WHERE 1=1 ORDER BY idade ASC LIMIT 3"; //ASC ou DESC;
     // String sql = "SELECT * FROM usuarios WHERE 1=1 ORDER BY nome DESC"; //ASC ou DESC;
     // String sql = "SELECT * FROM usuarios WHERE 1=1 ORDER BY UPPER(nome) ASC";
-    // String sql = "SELECT *, UPPER(nome) as nome2 FROM usuarios WHERE 1=1 ORDER BY UPPER(nome) DESC"; 
+    // String sql = "SELECT *, UPPER(nome) as nome2 FROM usuarios WHERE 1=1 ORDER BY UPPER(nome) DESC";
     List usuarios = await bd.rawQuery(sql);
 
     for (var usuario in usuarios) {
@@ -65,9 +67,25 @@ class _HomeState extends State<Home> {
     // print("Usuários: ${usuarios.toString()}");
   }
 
+  _recuperarUsuarioPeloId(int id) async {
+    Database bd = await _recuperarBancoDeDados();
+
+    //CRUD -> Create, Read, Update and Delete
+    List usuarios = await bd.query("usuarios",
+        columns: ["id", "nome", "idade"], where: "id = ?", whereArgs: [id]);
+
+    for (var usuario in usuarios) {
+      print(" id: ${usuario["id"]}" +
+          " nome: ${usuario["nome"]}" +
+          // " nome: ${usuario["nome2"]}" +
+          " idade: ${usuario["idade"]}\n");
+    }
+  }
+
   @override
   Widget build(BuildContext context) {
-    _listarUsuarios();
+    // _listarUsuarios();
+    _recuperarUsuarioPeloId(1);
     return Container();
   }
 }
