@@ -4,6 +4,10 @@ import '../model/anotacao.dart';
 
 class AnotacaoHelper {
   static const String nomeTabelaAnotacoes = "anotacoes";
+  static const String colunaId = "id";
+  static const String colunaTitulo = "titulo";
+  static const String colunaDescricao = "descricao";
+  static const String colunaData = "data";
 
   static final AnotacaoHelper _anotacaoHelper = AnotacaoHelper._internal();
 

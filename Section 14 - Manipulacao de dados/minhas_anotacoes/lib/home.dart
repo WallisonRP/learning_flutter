@@ -13,6 +13,7 @@ class _HomeState extends State<Home> {
   TextEditingController _titleController = TextEditingController();
   TextEditingController _descriptionController = TextEditingController();
   var _db = AnotacaoHelper();
+  List<Anotacao> _anotacoes = <Anotacao>[];
 
   _exibirTelaCadastro() {
     showDialog(
@@ -69,13 +70,29 @@ class _HomeState extends State<Home> {
 
   _recuperarAnotacoes() async {
     List anotacoesRecuperadas = await _db.recuperarAnotacoes();
+    List<Anotacao>? listaTemporaria = <Anotacao>[];
+    for (var item in anotacoesRecuperadas) {
+      Anotacao anotacao = Anotacao.fromMap(item);
+      listaTemporaria.add(anotacao);
+    }
 
-    print("Lista anotações ${anotacoesRecuperadas}");
+    setState(() {
+      _anotacoes = listaTemporaria!;
+    });
+
+    listaTemporaria = null;
+
+    print("Lista anotações $anotacoesRecuperadas");
+  }
+
+  @override
+  void initState() {
+    super.initState();
+    _recuperarAnotacoes();
   }
 
   @override
   Widget build(BuildContext context) {
-    _recuperarAnotacoes();
     return Scaffold(
       appBar: AppBar(
         title: Text("Minhas Anotações"),
