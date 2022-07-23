@@ -52,12 +52,16 @@ class _HomeState extends State<Home> {
         });
   }
 
-  _salvarAnotacao() {
+  _salvarAnotacao() async {
     String title = _titleController.text;
     String description = _descriptionController.text;
 
-    Anotacao anotacao = Anotacao(title, description, "teste");
-    _db.salvarAnotacao(anotacao);
+    // print("Data atual: ${DateTime.now().toString()}");
+
+    Anotacao anotacao = Anotacao(title, description, DateTime.now().toString());
+    int resultado = await _db.salvarAnotacao(anotacao);
+    print(resultado);
+    // return resultado;
   }
 
   @override

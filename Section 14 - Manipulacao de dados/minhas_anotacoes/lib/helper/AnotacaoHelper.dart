@@ -3,8 +3,11 @@ import 'package:path/path.dart';
 import '../model/anotacao.dart';
 
 class AnotacaoHelper {
+  static const String nomeTabelaAnotacoes = "anotacoes";
+
   static final AnotacaoHelper _anotacaoHelper = AnotacaoHelper._internal();
-  late Database _db;
+
+  Database? _db;
 
   factory AnotacaoHelper() {
     return _anotacaoHelper;
@@ -13,7 +16,6 @@ class AnotacaoHelper {
   AnotacaoHelper._internal();
 
   get db async {
-    // ignore: unnecessary_null_comparison
     if (_db != null) {
       return _db;
     } else {
@@ -23,7 +25,7 @@ class AnotacaoHelper {
   }
 
   _onCreate(Database db, int version) async {
-    String sql = "CREATE TABLE anotacoes ("
+    String sql = "CREATE TABLE $nomeTabelaAnotacoes ("
         "id INTEGER PRIMARY KEY AUTOINCREMENT, "
         "titulo VARCHAR, "
         "descricao TEXT, "
@@ -40,6 +42,8 @@ class AnotacaoHelper {
   }
 
   Future<int> salvarAnotacao(Anotacao anotacao) async {
-
+    var bancoDados = await db;
+    int resultado = await bancoDados.insert(nomeTabelaAnotacoes, anotacao.toMap());
+    return resultado;
   }
 }
