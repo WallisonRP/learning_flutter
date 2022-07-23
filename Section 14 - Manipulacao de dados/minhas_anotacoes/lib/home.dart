@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:minhas_anotacoes/helper/AnotacaoHelper.dart';
+import 'model/anotacao.dart';
 
 class Home extends StatefulWidget {
   const Home({Key? key}) : super(key: key);
@@ -10,6 +12,8 @@ class Home extends StatefulWidget {
 class _HomeState extends State<Home> {
   TextEditingController _titleController = TextEditingController();
   TextEditingController _descriptionController = TextEditingController();
+  var _db = AnotacaoHelper();
+
   _exibirTelaCadastro() {
     showDialog(
         context: context,
@@ -23,34 +27,37 @@ class _HomeState extends State<Home> {
                   controller: _titleController,
                   autofocus: true,
                   decoration: const InputDecoration(
-                    labelText: "Título",
-                    hintText: "Digite o título..."
-                  ),
+                      labelText: "Título", hintText: "Digite o título..."),
                 ),
                 TextField(
                   controller: _descriptionController,
                   decoration: const InputDecoration(
-                    labelText: "Descrição",
-                    hintText: "Digite a descrição..."
-                  ),
+                      labelText: "Descrição",
+                      hintText: "Digite a descrição..."),
                 )
               ],
             ),
             actions: [
               TextButton(
-                onPressed: () => Navigator.pop(context), 
-                child: Text("Cancelar")
-                ),
-                TextButton(
-                onPressed: () {
-                  //salvar entrada do usuário
-
-                }, 
-                child: Text("Salvar")
-                )
+                  onPressed: () => Navigator.pop(context),
+                  child: Text("Cancelar")),
+              TextButton(
+                  onPressed: () {
+                    //salvar entrada do usuário+
+                    _salvarAnotacao();
+                  },
+                  child: Text("Salvar"))
             ],
           );
         });
+  }
+
+  _salvarAnotacao() {
+    String title = _titleController.text;
+    String description = _descriptionController.text;
+
+    Anotacao anotacao = Anotacao(title, description, "teste");
+    _db.salvarAnotacao(anotacao);
   }
 
   @override

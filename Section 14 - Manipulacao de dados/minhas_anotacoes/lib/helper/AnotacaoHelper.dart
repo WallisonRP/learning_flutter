@@ -1,5 +1,6 @@
 import 'package:sqflite/sqflite.dart';
 import 'package:path/path.dart';
+import '../model/anotacao.dart';
 
 class AnotacaoHelper {
   static final AnotacaoHelper _anotacaoHelper = AnotacaoHelper._internal();
@@ -12,6 +13,7 @@ class AnotacaoHelper {
   AnotacaoHelper._internal();
 
   get db async {
+    // ignore: unnecessary_null_comparison
     if (_db != null) {
       return _db;
     } else {
@@ -21,8 +23,11 @@ class AnotacaoHelper {
   }
 
   _onCreate(Database db, int version) async {
-    String sql =
-        "CREATE TABLE anotacoes (id INTEGER PRIMARY KEY AUTOINCREMENT, titulo VARCHAR, descricao TEXT, data DATETIME)";
+    String sql = "CREATE TABLE anotacoes ("
+        "id INTEGER PRIMARY KEY AUTOINCREMENT, "
+        "titulo VARCHAR, "
+        "descricao TEXT, "
+        "data DATETIME)";
     db.execute(sql);
   }
 
@@ -32,5 +37,9 @@ class AnotacaoHelper {
 
     var db = await openDatabase(localDB, version: 1, onCreate: _onCreate);
     return db;
+  }
+
+  Future<int> salvarAnotacao(Anotacao anotacao) async {
+
   }
 }
