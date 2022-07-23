@@ -65,7 +65,8 @@ class _HomeState extends State<Home> {
 
     _titleController.clear();
     _descriptionController.clear();
-    // return resultado;
+
+    _recuperarAnotacoes();
   }
 
   _recuperarAnotacoes() async {
@@ -98,7 +99,24 @@ class _HomeState extends State<Home> {
         title: Text("Minhas Anotações"),
         backgroundColor: Colors.lightBlue,
       ),
-      body: Container(),
+      body: Column(
+        children: [
+          Expanded(
+              child: ListView.builder(
+            itemCount: _anotacoes.length,
+            itemBuilder: (context, index) {
+              final anotacao = _anotacoes[index];
+
+              return Card(
+                child: ListTile(
+                  title: Text(anotacao.titulo!),
+                  subtitle: Text("${anotacao.data} - ${anotacao.descricao}"),
+                ),
+              );
+            },
+          ))
+        ],
+      ),
       floatingActionButton: FloatingActionButton(
           backgroundColor: Colors.blue,
           foregroundColor: Colors.white,
