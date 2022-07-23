@@ -82,10 +82,24 @@ class _HomeState extends State<Home> {
     }
   }
 
+  _deletarUsuario(int id) async {
+    Database bd = await _recuperarBancoDeDados();
+
+    //Caso seja executado sem condições, todos os registros da tabela, serão apagados
+    // Future retorno = bd.delete("usuarios", where: "id = ?", whereArgs: [id]);
+    int retorno = await bd.delete("usuarios",
+        where: "id = ? AND nome = ? AND idade = ?",
+        whereArgs: [id, "Ester Figueiredo", 24]);
+    print("Quantidade de itens removidos: $retorno");
+  }
+
+
+
   @override
   Widget build(BuildContext context) {
-    // _listarUsuarios();
-    _recuperarUsuarioPeloId(1);
+    _listarUsuarios();
+    // _recuperarUsuarioPeloId(1);
+    // _deletarUsuario(3);
     return Container();
   }
 }
