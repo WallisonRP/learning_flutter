@@ -43,7 +43,15 @@ class AnotacaoHelper {
 
   Future<int> salvarAnotacao(Anotacao anotacao) async {
     var bancoDados = await db;
-    int resultado = await bancoDados.insert(nomeTabelaAnotacoes, anotacao.toMap());
+    int resultado =
+        await bancoDados.insert(nomeTabelaAnotacoes, anotacao.toMap());
     return resultado;
+  }
+
+  recuperarAnotacoes() async {
+    var bancoDados = await db;
+    String sql = "SELECT * FROM $nomeTabelaAnotacoes ORDER BY data DESC";
+    List anotacoes = await bancoDados.rawQuery(sql); 
+    return anotacoes;
   }
 }

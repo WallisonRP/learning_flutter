@@ -61,11 +61,21 @@ class _HomeState extends State<Home> {
     Anotacao anotacao = Anotacao(title, description, DateTime.now().toString());
     int resultado = await _db.salvarAnotacao(anotacao);
     print(resultado);
+
+    _titleController.clear();
+    _descriptionController.clear();
     // return resultado;
+  }
+
+  _recuperarAnotacoes() async {
+    List anotacoesRecuperadas = await _db.recuperarAnotacoes();
+
+    print("Lista anotações ${anotacoesRecuperadas}");
   }
 
   @override
   Widget build(BuildContext context) {
+    _recuperarAnotacoes();
     return Scaffold(
       appBar: AppBar(
         title: Text("Minhas Anotações"),
