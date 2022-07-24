@@ -126,7 +126,33 @@ class _HomeState extends State<Home> {
   }
 
   _removerAnotacao(int id) async {
-    await _db.removerAnotacao(id);
+
+
+    showDialog(
+        context: context,
+        builder: (context) {
+          return AlertDialog(
+            title: Text("Remover anotação"),
+            content: Column(
+              mainAxisSize: MainAxisSize.min,
+              children: const [
+                Text("Deseja remover a anotação?", style: TextStyle(fontWeight: FontWeight.bold),)
+              ],
+            ),
+            actions: [
+              TextButton(
+                  onPressed: () => Navigator.pop(context),
+                  child: const Text("Cancelar")),
+              TextButton(
+                  onPressed: () async {
+                    await _db.removerAnotacao(id);
+                    Navigator.pop(context);
+                  },
+                  child: Text("Remover", style: TextStyle(color: Colors.red))
+                  )
+            ],
+          );
+        });
 
     _recuperarAnotacoes();
   }
