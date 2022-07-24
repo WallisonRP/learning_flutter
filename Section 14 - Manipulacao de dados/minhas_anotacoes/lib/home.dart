@@ -17,12 +17,25 @@ class _HomeState extends State<Home> {
   var _db = AnotacaoHelper();
   List<Anotacao> _anotacoes = <Anotacao>[];
 
-  _exibirTelaCadastro() {
+  _exibirTelaCadastro({Anotacao? anotacao}) {
+    String _textoSalvarAtualizar = "";
+    if (anotacao == null) {
+      //salvar
+      _titleController.text = "";
+      _descriptionController.text = "";
+      _textoSalvarAtualizar = "Salvar";
+    } else {
+      //atualizar
+      _titleController.text = anotacao.titulo!;
+      _descriptionController.text = anotacao.descricao!;
+      _textoSalvarAtualizar = "Atualizar";
+    }
+
     showDialog(
         context: context,
         builder: (context) {
           return AlertDialog(
-            title: Text("Adicionar anotação"),
+            title: Text("$_textoSalvarAtualizar anotação"),
             content: Column(
               mainAxisSize: MainAxisSize.min,
               children: [
@@ -47,23 +60,32 @@ class _HomeState extends State<Home> {
               TextButton(
                   onPressed: () {
                     //salvar entrada do usuário+
-                    _salvarAnotacao();
+                    _salvarAtualizarAnotacao(anotacaoSelecionada: anotacao);
+                    Navigator.pop(context);
                   },
-                  child: Text("Salvar"))
+                  child: Text(_textoSalvarAtualizar))
             ],
           );
         });
   }
 
-  _salvarAnotacao() async {
+  _salvarAtualizarAnotacao({Anotacao? anotacaoSelecionada}) async {
     String title = _titleController.text;
     String description = _descriptionController.text;
 
-    // print("Data atual: ${DateTime.now().toString()}");
-
-    Anotacao anotacao = Anotacao(title, description, DateTime.now().toString());
-    int resultado = await _db.salvarAnotacao(anotacao);
-    print(resultado);
+    // ignore: unnecessary_null_comparison
+    if (anotacaoSelecionada == null) {
+      //salvar
+      Anotacao anotacao =
+          Anotacao(title, description, DateTime.now().toString());
+      int resultado = await _db.salvarAnotacao(anotacao);
+    } else {
+      //atualizar
+      anotacaoSelecionada.titulo = title;
+      anotacaoSelecionada.descricao = description;
+      anotacaoSelecionada.data = DateTime.now().toString();
+      int resultado = await _db.atualizarAnotacao(anotacaoSelecionada); 
+    }
 
     _titleController.clear();
     _descriptionController.clear();
@@ -85,17 +107,17 @@ class _HomeState extends State<Home> {
 
     listaTemporaria = null;
 
-    print("Lista anotações $anotacoesRecuperadas");
+    // print("Lista anotações $anotacoesRecuperadas");
   }
 
   _formatarData(String? data) {
     initializeDateFormatting("pt_BR");
 
     // var formater = DateFormat("d/M/y - H:m:s");
-    // var formater = DateFormat("d/MM/y - H:m:s");
+    var formater = DateFormat("d/MM/y - H:m:s");
     // var formater = DateFormat("d/MMM/y - H:m:s");
     // var formater = DateFormat("d/MMM/y - H:m:s");
-    var formater = DateFormat.yMd("pt_BR");
+    // var formater = DateFormat.yMd("pt_BR");
 
     DateTime dataConvertida = DateTime.parse(data!);
     String dataFormatada = formater.format(dataConvertida);
@@ -129,6 +151,30 @@ class _HomeState extends State<Home> {
                   title: Text(anotacao.titulo!),
                   subtitle: Text(
                       "${_formatarData(anotacao.data)} - ${anotacao.descricao}"),
+                  trailing: Row(mainAxisSize: MainAxisSize.min, children: [
+                    GestureDetector(
+                      onTap: () {
+                        _exibirTelaCadastro(anotacao: anotacao);
+                      },
+                      child: const Padding(
+                        padding: EdgeInsets.only(right: 16),
+                        child: Icon(
+                          Icons.edit,
+                          color: Colors.green,
+                        ),
+                      ),
+                    ),
+                    GestureDetector(
+                      onTap: () {},
+                      child: const Padding(
+                        padding: EdgeInsets.only(right: 0),
+                        child: Icon(
+                          Icons.delete,
+                          color: Colors.red,
+                        ),
+                      ),
+                    )
+                  ]),
                 ),
               );
             },

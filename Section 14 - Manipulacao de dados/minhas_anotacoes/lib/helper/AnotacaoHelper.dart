@@ -55,7 +55,17 @@ class AnotacaoHelper {
   recuperarAnotacoes() async {
     var bancoDados = await db;
     String sql = "SELECT * FROM $nomeTabelaAnotacoes ORDER BY data DESC";
-    List anotacoes = await bancoDados.rawQuery(sql); 
+    List anotacoes = await bancoDados.rawQuery(sql);
     return anotacoes;
+  }
+
+  Future<int> atualizarAnotacao(Anotacao anotacao) async {
+    var bancoDados = await db;
+    return await bancoDados.update(
+      nomeTabelaAnotacoes,
+      anotacao.toMap(),
+      where: "id = ?",
+      whereArgs: [anotacao.id]
+    );
   }
 }
