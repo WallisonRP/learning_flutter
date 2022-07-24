@@ -84,7 +84,7 @@ class _HomeState extends State<Home> {
       anotacaoSelecionada.titulo = title;
       anotacaoSelecionada.descricao = description;
       anotacaoSelecionada.data = DateTime.now().toString();
-      int resultado = await _db.atualizarAnotacao(anotacaoSelecionada); 
+      int resultado = await _db.atualizarAnotacao(anotacaoSelecionada);
     }
 
     _titleController.clear();
@@ -123,6 +123,12 @@ class _HomeState extends State<Home> {
     String dataFormatada = formater.format(dataConvertida);
 
     return dataFormatada;
+  }
+
+  _removerAnotacao(int id) async {
+    await _db.removerAnotacao(id);
+
+    _recuperarAnotacoes();
   }
 
   @override
@@ -165,7 +171,9 @@ class _HomeState extends State<Home> {
                       ),
                     ),
                     GestureDetector(
-                      onTap: () {},
+                      onTap: () {
+                        _removerAnotacao(anotacao.id!);
+                      },
                       child: const Padding(
                         padding: EdgeInsets.only(right: 0),
                         child: Icon(
