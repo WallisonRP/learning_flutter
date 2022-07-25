@@ -125,7 +125,7 @@ class _HomeState extends State<Home> {
     return dataFormatada;
   }
 
-  _removerAnotacao(int id) async {
+  _removerAnotacao(int id) {
 
 
     showDialog(
@@ -146,7 +146,9 @@ class _HomeState extends State<Home> {
               TextButton(
                   onPressed: () async {
                     await _db.removerAnotacao(id);
+
                     Navigator.pop(context);
+                    _recuperarAnotacoes();
                   },
                   child: Text("Remover", style: TextStyle(color: Colors.red))
                   )
@@ -154,7 +156,7 @@ class _HomeState extends State<Home> {
           );
         });
 
-    _recuperarAnotacoes();
+    
   }
 
   @override
