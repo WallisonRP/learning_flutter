@@ -9,13 +9,20 @@ class Home extends StatefulWidget {
 }
 
 class _HomeState extends State<Home> {
+  final player = AudioPlayer();
+  AudioCache audioCache = AudioCache(prefix: "audios/");
+
+  _executarAudio() async {
+    await player.setSource(AssetSource('audios/musica.mp3'));
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
-        title: Text("teste")
+      appBar: AppBar(title: Text("teste")),
+      body: Container(
+        child: ElevatedButton(onPressed: _executarAudio, child: Text("Teste")),
       ),
-      body: Container(),
     );
   }
 }
