@@ -9,19 +9,70 @@ class Home extends StatefulWidget {
 }
 
 class _HomeState extends State<Home> {
-  final player = AudioPlayer();
+  AudioPlayer player = AudioPlayer();
   AudioCache audioCache = AudioCache(prefix: "audios/");
+  bool primeiraExecucao = true;
+
+  _carregarAudio() async {
+    await player.setSource(AssetSource("audios/musica.mp3"));
+  }
 
   _executarAudio() async {
-    await player.setSource(AssetSource('audios/musica.mp3'));
+    await player.resume();
+  }
+
+  _pausarAudio() async {
+    await player.pause();
+  }
+
+  _pararAudio() async {
+    await player.stop();
   }
 
   @override
   Widget build(BuildContext context) {
+    _carregarAudio();
     return Scaffold(
       appBar: AppBar(title: Text("teste")),
-      body: Container(
-        child: ElevatedButton(onPressed: _executarAudio, child: Text("Teste")),
+      body: Column(
+        children: [
+          //Slider
+          Row(
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: [
+              //item 1
+              Padding(
+                padding: EdgeInsets.all(8),
+                child: GestureDetector(
+                  child: Image.asset("assets/imagens/executar.png"),
+                  onTap: () {
+                    _executarAudio();
+                  },
+                ),
+              ),
+              Padding(
+                padding: EdgeInsets.all(8),
+                child: GestureDetector(
+                  child: Image.asset("assets/imagens/pausar.png"),
+                  onTap: () {
+                    _pausarAudio();
+                  },
+                ),
+              ),
+              Padding(
+                padding: EdgeInsets.all(8),
+                child: GestureDetector(
+                  child: Image.asset("assets/imagens/parar.png"),
+                  onTap: () {
+                    _pararAudio();
+                  },
+                ),
+              )
+              //item 2
+              //item 3
+            ],
+          )
+        ],
       ),
     );
   }
