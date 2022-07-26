@@ -10,6 +10,14 @@ class TabAnimais extends StatefulWidget {
 class _TabAnimaisState extends State<TabAnimais> {
   @override
   Widget build(BuildContext context) {
-    return Center(child: Text("Animais"),);
+    return GridView.count(
+      crossAxisCount: 2,
+      children: [
+        GestureDetector(
+          onTap: (){},
+          child: ,
+        )
+      ],
+      );
   }
 }
