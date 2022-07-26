@@ -15,7 +15,7 @@ class _TabAnimaisState extends State<TabAnimais> {
       children: [
         GestureDetector(
           onTap: (){},
-          child: ,
+          child: Text("a"),
         )
       ],
       );
