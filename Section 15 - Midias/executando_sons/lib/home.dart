@@ -12,8 +12,10 @@ class _HomeState extends State<Home> {
   AudioPlayer player = AudioPlayer();
   AudioCache audioCache = AudioCache(prefix: "audios/");
   bool primeiraExecucao = true;
+  double _volume = 0.5;
 
   _carregarAudio() async {
+    player.setVolume(_volume);
     await player.setSource(AssetSource("audios/musica.mp3"));
   }
 
@@ -36,7 +38,17 @@ class _HomeState extends State<Home> {
       appBar: AppBar(title: Text("teste")),
       body: Column(
         children: [
-          //Slider
+          Slider(
+              value: _volume,
+              min: 0,
+              max: 1,
+              onChanged: (novoVolume) async {
+                setState(() {
+                  _volume = novoVolume;
+                });
+
+                player.setVolume(novoVolume);
+              }),
           Row(
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
