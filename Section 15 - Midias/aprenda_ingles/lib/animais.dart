@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-
+import 'package:audiofileplayer/audiofileplayer.dart';
 class TabAnimais extends StatefulWidget {
   const TabAnimais({Key? key}) : super(key: key);
 
@@ -8,6 +8,11 @@ class TabAnimais extends StatefulWidget {
 }
 
 class _TabAnimaisState extends State<TabAnimais> {
+
+  _executarAudio(String nomeAudio) async {
+    Audio.load('assets/sounds/$nomeAudio.mp3')..play()..dispose();
+  }
+
   @override
   Widget build(BuildContext context) {
     double largura = MediaQuery.of(context).size.width;
@@ -18,27 +23,39 @@ class _TabAnimaisState extends State<TabAnimais> {
       childAspectRatio: MediaQuery.of(context).size.aspectRatio * 2,
       children: [
         GestureDetector(
-          onTap: () {},
+          onTap: () {
+            _executarAudio("cao");
+          },
           child: Image.asset("assets/images/cao.png"),
         ),
         GestureDetector(
-          onTap: () {},
+          onTap: () {
+            _executarAudio("gato");
+          },
           child: Image.asset("assets/images/gato.png"),
         ),
         GestureDetector(
-          onTap: () {},
+          onTap: () {
+            _executarAudio("leao");
+          },
           child: Image.asset("assets/images/leao.png"),
         ),
         GestureDetector(
-          onTap: () {},
+          onTap: () {
+            _executarAudio("macaco");
+          },
           child: Image.asset("assets/images/macaco.png"),
         ),
         GestureDetector(
-          onTap: () {},
+          onTap: () {
+            _executarAudio("ovelha");
+          },
           child: Image.asset("assets/images/ovelha.png"),
         ),
         GestureDetector(
-          onTap: () {},
+          onTap: () {
+            _executarAudio("vaca");
+          },
           child: Image.asset("assets/images/vaca.png"),
         ),
       ],
