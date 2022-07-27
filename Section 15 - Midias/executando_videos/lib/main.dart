@@ -24,16 +24,26 @@ class _HomeState extends State<Home> {
     super.initState();
 
     _controller = VideoPlayerController.network(
-      "https://sample-videos.com/video123/mp4/720/big_buck_bunny_720p_1mb.mp4"
-    )..initialize().then((_){
-      setState(() {
-        
+        "https://sample-videos.com/video123/mp4/720/big_buck_bunny_720p_1mb.mp4")
+      ..initialize().then((_) {
+        setState(() {
+          _controller!.play();
+        });
       });
-    });
+      
+
+
   }
 
   @override
   Widget build(BuildContext context) {
-    return Container();
+    return Scaffold(
+      body: Center(
+        child: AspectRatio(
+          aspectRatio: _controller!.value.aspectRatio,
+          child: VideoPlayer(_controller!),
+          ),
+        ),
+    );
   }
 }
