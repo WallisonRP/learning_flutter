@@ -1,3 +1,5 @@
+// ignore_for_file: prefer_const_constructors
+
 import 'package:flutter/material.dart';
 import 'package:video_player/video_player.dart';
 
@@ -15,6 +17,21 @@ class Home extends StatefulWidget {
 }
 
 class _HomeState extends State<Home> {
+  VideoPlayerController? _controller;
+
+  @override
+  void initState() {
+    super.initState();
+
+    _controller = VideoPlayerController.network(
+      "https://sample-videos.com/video123/mp4/720/big_buck_bunny_720p_1mb.mp4"
+    )..initialize().then((_){
+      setState(() {
+        
+      });
+    });
+  }
+
   @override
   Widget build(BuildContext context) {
     return Container();
