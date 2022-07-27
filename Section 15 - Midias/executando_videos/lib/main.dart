@@ -22,7 +22,7 @@ class _HomeState extends State<Home> {
   @override
   void initState() {
     super.initState();
-
+/*
     _controller = VideoPlayerController.network(
         "https://sample-videos.com/video123/mp4/720/big_buck_bunny_720p_1mb.mp4")
       ..initialize().then((_) {
@@ -30,9 +30,13 @@ class _HomeState extends State<Home> {
           _controller!.play();
         });
       });
-      
+      */
 
-
+    _controller = VideoPlayerController.asset("videos/exemplo.mp4")
+      ..setLooping(true)
+      ..initialize().then((_) {
+        _controller!.play();
+      });
   }
 
   @override
@@ -42,8 +46,8 @@ class _HomeState extends State<Home> {
         child: AspectRatio(
           aspectRatio: _controller!.value.aspectRatio,
           child: VideoPlayer(_controller!),
-          ),
         ),
+      ),
     );
   }
 }
