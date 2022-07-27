@@ -35,7 +35,10 @@ class _HomeState extends State<Home> {
     _controller = VideoPlayerController.asset("videos/exemplo.mp4")
       ..setLooping(true)
       ..initialize().then((_) {
-        _controller!.play();
+        setState(() {
+        // _controller!.play();
+          
+        });
       });
   }
 
@@ -43,10 +46,22 @@ class _HomeState extends State<Home> {
   Widget build(BuildContext context) {
     return Scaffold(
       body: Center(
-        child: AspectRatio(
-          aspectRatio: _controller!.value.aspectRatio,
-          child: VideoPlayer(_controller!),
+        child: _controller!.value.isInitialized 
+        ? AspectRatio(
+            aspectRatio: _controller!.value.aspectRatio,
+            child: VideoPlayer(_controller!),
+          )
+        : Text("Pressione o Play"),
+      ),
+      floatingActionButton: FloatingActionButton(
+        child: Icon(
+          _controller!.value.isPlaying ? Icons.pause : Icons.play_arrow
         ),
+        onPressed: (){
+          setState(() {
+            _controller!.value.isPlaying ? _controller!.pause() : _controller!.play();
+          });
+        },
       ),
     );
   }
