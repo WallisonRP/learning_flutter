@@ -1,14 +1,22 @@
+// ignore_for_file: import_of_legacy_library_into_null_safe
+
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 
 void main() {
   //inicializar o firebase
   WidgetsFlutterBinding.ensureInitialized();
+  Firestore db = Firestore.instance;
 
-  Firestore.instance
-      .collection("usuarios")
-      .document("pontuacao")
-      .setData({"Wallison": "1215", "Gustavo": "100"});
+  db.collection("usuarios")
+    .document("002")
+  .setData(
+      {
+        "nome": "Wallison",
+        "idade": "23",
+        "sobrenome": "Pereira"
+      }
+    );
 
   runApp(const MyApp());
 }
