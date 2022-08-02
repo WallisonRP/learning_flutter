@@ -10,6 +10,14 @@ void main() async {
 
   // db.collection("usuarios").document("003").delete();
 
+  DocumentSnapshot snapshot =
+      await db.collection("usuarios").document("002").get();
+
+
+  var dados = snapshot.data;
+  print("Nome: ${dados["nome"]}, idade: ${dados["idade"]}");
+
+
   runApp(const MyApp());
 }
 
