@@ -8,30 +8,7 @@ void main() async {
   WidgetsFlutterBinding.ensureInitialized();
   Firestore db = Firestore.instance;
 
-  /*db.collection("usuarios")
-    .document("002")
-  .setData(
-      {
-        "nome": "Wallison",
-        "idade": "23",
-        "sobrenome": "Pereira"
-      }
-    );*/
-  /*
-  DocumentReference ref = await db.collection("noticias").add({
-    "titulo": "Noticia de teste2",
-    "descricao": "aaaaaaaaaaaaaaaaaaaaaa...."
-  });
-
-  print("Item salvo: ${ref.documentID}");
-  */
-
-  db.collection("noticias").document("lpwXXznCoG3o5JeA5ou2").setData(
-    {
-      "titulo": "Noticia alterada",
-      "descricao": "aaaaaaaaaaaaaaaaaaaaaa...."
-    }
-  );
+  // db.collection("usuarios").document("003").delete();
 
   runApp(const MyApp());
 }
