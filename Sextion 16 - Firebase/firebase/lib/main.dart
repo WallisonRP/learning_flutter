@@ -19,14 +19,22 @@ void main() async {
   print("Nome: ${dados["nome"]}, idade: ${dados["idade"]}");
   */
 
-  QuerySnapshot query = await db.collection("usuarios").getDocuments();
+  // QuerySnapshot query = await db.collection("usuarios").getDocuments();
 
   // print("Dados usuários: ${query.documents.toString()}");
-
+  /*
   for (DocumentSnapshot item in query.documents) {
     var dados = item.data;
     print("Dados usuários: ${dados["nome"]} - ${dados["idade"]}");
   }
+  */
+
+  db.collection("usuarios").snapshots().listen((snapshot) {
+    for(DocumentSnapshot item in snapshot.documents) {
+      var dados = item.data;
+      print("Dados usuários: ${dados["nome"]} - ${dados["idade"]}");
+    }
+  });
 
   runApp(const MyApp());
 }
