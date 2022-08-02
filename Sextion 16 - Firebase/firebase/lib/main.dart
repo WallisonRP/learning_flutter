@@ -10,13 +10,23 @@ void main() async {
 
   // db.collection("usuarios").document("003").delete();
 
+/*
   DocumentSnapshot snapshot =
       await db.collection("usuarios").document("002").get();
 
 
   var dados = snapshot.data;
   print("Nome: ${dados["nome"]}, idade: ${dados["idade"]}");
+  */
 
+  QuerySnapshot query = await db.collection("usuarios").getDocuments();
+
+  // print("Dados usuários: ${query.documents.toString()}");
+
+  for (DocumentSnapshot item in query.documents) {
+    var dados = item.data;
+    print("Dados usuários: ${dados["nome"]} - ${dados["idade"]}");
+  }
 
   runApp(const MyApp());
 }
