@@ -3,12 +3,12 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 
-void main() {
+void main() async {
   //inicializar o firebase
   WidgetsFlutterBinding.ensureInitialized();
   Firestore db = Firestore.instance;
 
-  db.collection("usuarios")
+  /*db.collection("usuarios")
     .document("002")
   .setData(
       {
@@ -16,7 +16,14 @@ void main() {
         "idade": "23",
         "sobrenome": "Pereira"
       }
-    );
+    );*/
+
+  DocumentReference ref = await db.collection("noticias").add({
+    "titulo": "Noticia de teste2",
+    "descricao": "aaaaaaaaaaaaaaaaaaaaaa...."
+  });
+
+  print("Item salvo: ${ref.documentID}");
 
   runApp(const MyApp());
 }
