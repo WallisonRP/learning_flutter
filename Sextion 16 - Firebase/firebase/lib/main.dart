@@ -8,33 +8,20 @@ void main() async {
   WidgetsFlutterBinding.ensureInitialized();
   Firestore db = Firestore.instance;
 
-  // db.collection("usuarios").document("003").delete();
+  QuerySnapshot querySnapshot = await db.collection("usuarios")
+  // .where("nome", isEqualTo: "wallison")
+  // .where("idade", isEqualTo: 23)
+  // .where("idade", isLessThanOrEqualTo: 23)
+  .where("idade", isGreaterThan: 19)
+  // .where("idade", isLessThan: 30)
+  .orderBy("idade",  descending: true)
+  .orderBy("nome",  descending: false)
+  .getDocuments();
 
-/*
-  DocumentSnapshot snapshot =
-      await db.collection("usuarios").document("002").get();
-
-
-  var dados = snapshot.data;
-  print("Nome: ${dados["nome"]}, idade: ${dados["idade"]}");
-  */
-
-  // QuerySnapshot query = await db.collection("usuarios").getDocuments();
-
-  // print("Dados usuários: ${query.documents.toString()}");
-  /*
-  for (DocumentSnapshot item in query.documents) {
+  for (DocumentSnapshot item in querySnapshot.documents) {
     var dados = item.data;
-    print("Dados usuários: ${dados["nome"]} - ${dados["idade"]}");
+    print("Filtro nome: ${dados['nome']} idade: ${dados['idade']}");
   }
-  */
-
-  db.collection("usuarios").snapshots().listen((snapshot) {
-    for(DocumentSnapshot item in snapshot.documents) {
-      var dados = item.data;
-      print("Dados usuários: ${dados["nome"]} - ${dados["idade"]}");
-    }
-  });
 
   runApp(const MyApp());
 }
