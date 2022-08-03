@@ -7,16 +7,21 @@ void main() async {
   //inicializar o firebase
   WidgetsFlutterBinding.ensureInitialized();
   Firestore db = Firestore.instance;
+  var pesquisa = "mar";
+  QuerySnapshot querySnapshot = await db
+      .collection("usuarios")
+      // .where("nome", isEqualTo: "wallison")
+      // .where("idade", isEqualTo: 23)
+      // .where("idade", isLessThanOrEqualTo: 23)
+      // .where("idade", isGreaterThan: 19)
+      // .where("idade", isLessThan: 30)
+      // .orderBy("idade",  descending: true)
+      // .orderBy("nome",  descending: false)
+      // .limit(2)
 
-  QuerySnapshot querySnapshot = await db.collection("usuarios")
-  // .where("nome", isEqualTo: "wallison")
-  // .where("idade", isEqualTo: 23)
-  // .where("idade", isLessThanOrEqualTo: 23)
-  .where("idade", isGreaterThan: 19)
-  // .where("idade", isLessThan: 30)
-  .orderBy("idade",  descending: true)
-  .orderBy("nome",  descending: false)
-  .getDocuments();
+      .where("nome", isGreaterThanOrEqualTo: pesquisa)
+      .where("nome", isLessThanOrEqualTo: "$pesquisa\uf8ff")
+      .getDocuments(); //Pode ser utilizado o .snapshot().listen()
 
   for (DocumentSnapshot item in querySnapshot.documents) {
     var dados = item.data;
