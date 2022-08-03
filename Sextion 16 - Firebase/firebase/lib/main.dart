@@ -1,31 +1,38 @@
 // ignore_for_file: import_of_legacy_library_into_null_safe
-
-import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
+// import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 
 void main() async {
   //inicializar o firebase
   WidgetsFlutterBinding.ensureInitialized();
-  Firestore db = Firestore.instance;
-  var pesquisa = "mar";
-  QuerySnapshot querySnapshot = await db
-      .collection("usuarios")
-      // .where("nome", isEqualTo: "wallison")
-      // .where("idade", isEqualTo: 23)
-      // .where("idade", isLessThanOrEqualTo: 23)
-      // .where("idade", isGreaterThan: 19)
-      // .where("idade", isLessThan: 30)
-      // .orderBy("idade",  descending: true)
-      // .orderBy("nome",  descending: false)
-      // .limit(2)
+  FirebaseAuth auth = FirebaseAuth
+      .instance; // objeto responsável por fazer a autenticação de usuários
 
-      .where("nome", isGreaterThanOrEqualTo: pesquisa)
-      .where("nome", isLessThanOrEqualTo: "$pesquisa\uf8ff")
-      .getDocuments(); //Pode ser utilizado o .snapshot().listen()
+  /* Criar usuário com e-mail e senha*/
+  String email = "wallisonrp@gmail.com";
+  String senha = "123456";
 
-  for (DocumentSnapshot item in querySnapshot.documents) {
-    var dados = item.data;
-    print("Filtro nome: ${dados['nome']} idade: ${dados['idade']}");
+/*
+  auth
+      .createUserWithEmailAndPassword(email: email, password: senha)
+      .then((firebaseUser) {
+    print(
+        "Sucesso ao criar um novo usuário, seu e-mail é: ${firebaseUser.email}");
+  }).catchError((error) {
+    print("Erro ao cadastrar usuário. Erro: ${error.toString()}");
+  });
+  */
+
+  //Verificar se o usuário está logado
+  FirebaseUser usuarioAtual = await auth.currentUser();
+
+  if (usuarioAtual != null) {
+    //usuário logado
+    print("Usuário logado, e-mail: ${usuarioAtual.email}");
+  } else {
+    // usuário deslogado
+    print("Usuário deslogado");
   }
 
   runApp(const MyApp());
