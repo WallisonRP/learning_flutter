@@ -1,62 +1,70 @@
-// ignore_for_file: import_of_legacy_library_into_null_safe
+// ignore_for_file: import_of_legacy_library_into_null_safe, prefer_const_constructors
+import 'dart:io';
 import 'package:flutter/material.dart';
 // import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
+import 'package:image_picker/image_picker.dart';
 
 void main() async {
   //inicializar o firebase
-  WidgetsFlutterBinding.ensureInitialized();
-  FirebaseAuth auth = FirebaseAuth
-      .instance; // objeto responsável por fazer a autenticação de usuários
-
-  /* Criar usuário com e-mail e senha*/
-  String email = "wallisonrp@gmail.com";
-  String senha = "123456";
-
-/*
-  auth
-      .createUserWithEmailAndPassword(email: email, password: senha)
-      .then((firebaseUser) {
-    print(
-        "Sucesso ao criar um novo usuário, seu e-mail é: ${firebaseUser.email}");
-  }).catchError((error) {
-    print("Erro ao cadastrar usuário. Erro: ${error.toString()}");
-  });
-  */
-
-//Deslogar usuário
-  // auth.signOut();
-
-//Logar usuário
-  auth.signInWithEmailAndPassword(
-    email: email, 
-    password: senha
-    ).then((firebaseUser){
-      print(
-        "Sucesso ao fazer login, seu e-mail é: ${firebaseUser.email}");
-    }).catchError((error){
-      print("Erro ao fazer login. Erro: ${error.toString()}");
-    });
-
-  //Verificar se o usuário está logado
-  FirebaseUser usuarioAtual = await auth.currentUser();
-
-  if (usuarioAtual != null) {
-    //usuário logado
-    print("Usuário logado, e-mail: ${usuarioAtual.email}");
-  } else {
-    // usuário deslogado
-    print("Usuário deslogado");
-  }
-
-  runApp(const MyApp());
+  // WidgetsFlutterBinding.ensureInitialized();
+  runApp(MaterialApp(
+    home: Home(),
+  ));
 }
 
-class MyApp extends StatelessWidget {
-  const MyApp({Key? key}) : super(key: key);
+class Home extends StatefulWidget {
+  const Home({Key? key}) : super(key: key);
+
+  @override
+  State<Home> createState() => _HomeState();
+}
+
+class _HomeState extends State<Home> {
+  final ImagePicker _picker = ImagePicker();
+  XFile? _imagem;
+  Future _recuperarImagem(bool daCamera) async {
+    XFile? imagemSelecionada;
+    if (daCamera == true) {
+      //Recuperar imagem pela camera
+      imagemSelecionada = await _picker.pickImage(source: ImageSource.camera);
+    } else {
+      //Recuperar imagem pela galeria
+      imagemSelecionada = await _picker.pickImage(source: ImageSource.gallery);
+    }
+
+    setState(() {
+      _imagem = imagemSelecionada;
+    });
+  }
 
   @override
   Widget build(BuildContext context) {
-    return Container();
+    return Scaffold(
+      appBar: AppBar(
+        title: Text("Selecionar imagem"),
+      ),
+      body: SingleChildScrollView(
+        child: Column(
+          mainAxisAlignment: MainAxisAlignment.center,
+          crossAxisAlignment: CrossAxisAlignment.center,
+          children: [
+            ElevatedButton(
+                onPressed: () {
+                  _recuperarImagem(true);
+                },
+                child: Text("Camera")),
+            ElevatedButton(
+                onPressed: () {
+                  _recuperarImagem(false);
+                },
+                child: Text("Galeria")),
+            _imagem == null ?
+            Container() :
+            Image.file(File(_imagem!.path))
+          ],
+        ),
+      ),
+    );
   }
 }
