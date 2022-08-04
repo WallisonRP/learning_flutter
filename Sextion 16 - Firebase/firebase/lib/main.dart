@@ -24,6 +24,20 @@ void main() async {
   });
   */
 
+//Deslogar usuário
+  // auth.signOut();
+
+//Logar usuário
+  auth.signInWithEmailAndPassword(
+    email: email, 
+    password: senha
+    ).then((firebaseUser){
+      print(
+        "Sucesso ao fazer login, seu e-mail é: ${firebaseUser.email}");
+    }).catchError((error){
+      print("Erro ao fazer login. Erro: ${error.toString()}");
+    });
+
   //Verificar se o usuário está logado
   FirebaseUser usuarioAtual = await auth.currentUser();
 
