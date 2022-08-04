@@ -1,8 +1,9 @@
 // ignore_for_file: import_of_legacy_library_into_null_safe, prefer_const_constructors
 import 'dart:io';
 import 'package:flutter/material.dart';
-// import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
+import 'package:firebase_storage/firebase_storage.dart';
 import 'package:image_picker/image_picker.dart';
 
 void main() async {
@@ -38,6 +39,15 @@ class _HomeState extends State<Home> {
     });
   }
 
+  Future _uploadImagem() async {
+    FirebaseStorage storage = FirebaseStorage.instance;
+    StorageReference pastaRaiz = storage.ref();
+    StorageReference arquivo = pastaRaiz.child("fotos").child("foto1.jpg");
+
+    //Fazer upload de imagens
+    arquivo.putFile(File(_imagem!.path));
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -59,9 +69,12 @@ class _HomeState extends State<Home> {
                   _recuperarImagem(false);
                 },
                 child: Text("Galeria")),
-            _imagem == null ?
-            Container() :
-            Image.file(File(_imagem!.path))
+            _imagem == null ? Container() : Image.file(File(_imagem!.path)),
+            ElevatedButton(
+                onPressed: () {
+                  _uploadImagem();
+                },
+                child: Text("Upload Storage"))
           ],
         ),
       ),
