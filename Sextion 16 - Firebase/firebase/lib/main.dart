@@ -3,72 +3,57 @@
 // ignore_for_file: import_of_legacy_library_into_null_safe
 
 import 'dart:typed_data';
-
 import 'package:firebase_core/firebase_core.dart';
-import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
   await Firebase.initializeApp();
 
-  // Firestore db = Firestore.instance;
-  FirebaseFirestore db = FirebaseFirestore.instance;
+  FirebaseAuth auth = FirebaseAuth
+      .instance; // objeto responsável por fazer a autenticação de usuários
 
-//Criar novo usuário
-  // db
-  // .collection("usuarios")
-  // .doc("009")
-  // .set({"nome": "Felipe", "idade": "19", "sobrenome": "Botelho"});
+  /* Criar usuário com e-mail e senha*/
+  String email = "wallisonrp@gmail.com";
+  String senha = "123456";
 
-//Criar dados usando id aleatório
-  // DocumentReference ref = await db.collection("noticias").add({
-  //   "titulo": "Noticia de teste2",
-  //   "descricao": "aaaaaaaaaaaaaaaaaaaaaa...."
+  // auth
+  //     .createUserWithEmailAndPassword(email: email, password: senha)
+  //     .then((firebaseUser) {
+  //   print(
+  //       "Sucesso ao criar um novo usuário, seu e-mail é: ${firebaseUser.user?.email}");
+  // }).catchError((error) {
+  //   print("Erro ao cadastrar usuário. Erro: ${error.toString()}");
   // });
 
-  // print("Item salvo: ${ref.id}");
 
-//Remover usuário
-  // db.collection("usuarios").doc("003").delete();
+  // Deslogar usuário
+  auth.signOut();
 
-//Listar usuário
-  // DocumentSnapshot snapshot = await db.collection("usuarios").doc("001").get();
-  // var dados = snapshot.data();
-  // print(dados);
+  //Logar usuário
+  // auth.signInWithEmailAndPassword(
+  //   email: email, 
+  //   password: senha
+  //   ).then((firebaseUser){
+  //     print(
+  //       "Sucesso ao fazer login, seu e-mail é: ${firebaseUser.user?.email}");
+  //   }).catchError((error){
+  //     print("Erro ao fazer login. Erro: ${error.toString()}");
+  //   });
 
-//Listar coleção de usuários
-  // QuerySnapshot query = await db.collection("usuarios").get();
+  //Verificar se o usuário está logado
 
-  // print("Dados usuários: ${query.docs.toString()}");
+  User usuarioAtual = await auth.currentUser!;
 
-  //   for (DocumentSnapshot item in query.docs) {
-  //   var dados = item.data;
-  //   print(dados);
-  // }
-
-  //Aplicar filtros
-  // var pesquisa = "mar";
-  // QuerySnapshot querySnapshot = await db
-  //     .collection("usuarios")
-  //     // .where("nome", isEqualTo: "wallison")
-  //     // .where("idade", isEqualTo: 23)
-  //     // .where("idade", isLessThanOrEqualTo: 23)
-  //     // .where("idade", isGreaterThan: 19)
-  //     // .where("idade", isLessThan: 30)
-  //     // .orderBy("idade",  descending: true)
-  //     // .orderBy("nome",  descending: false)
-  //     // .limit(2)
-
-  //     .where("nome", isGreaterThanOrEqualTo: pesquisa)
-  //     .where("nome", isLessThanOrEqualTo: "$pesquisa\uf8ff")
-  //     .getDocuments(); //Pode ser utilizado o .snapshot().listen()
-
-  // for (DocumentSnapshot item in querySnapshot.docs) {
-  //   var dados = item.data;
-  //   print("Filtro nome: ${dados['nome']} idade: ${dados['idade']}");
-  // }
-
+  if (usuarioAtual != null) {
+    //usuário logado
+    print("Usuário logado, e-mail: ${usuarioAtual.email}");
+  } else {
+    // usuário deslogado
+    print("Usuário deslogado");
+  }
+  
   runApp(const MyApp());
 }
 
